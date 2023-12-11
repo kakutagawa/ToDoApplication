@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var newItem: String = ""
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            HStack {
+                TextField("入力", text: $newItem)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+                Button {
+
+                } label: {
+                    Image(systemName: "plus.square.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
+                }
+            }
         }
-        .padding()
+        Spacer()
     }
 }
 
