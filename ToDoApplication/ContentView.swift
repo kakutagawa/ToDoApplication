@@ -25,10 +25,12 @@ struct ContentView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
                 Button {
-                    todoLists.append(
-                        ToDoItem(isChecked: false, task: newTask)
-                    )
-                    newTask = ""
+                    if !newTask.isEmpty {
+                        todoLists.append(
+                            ToDoItem(isChecked: false, task: newTask)
+                        )
+                        newTask = ""
+                    }
                 } label: {
                     Image(systemName: "plus.square.fill")
                         .resizable()
@@ -51,13 +53,27 @@ struct ContentView: View {
                                 .foregroundStyle(.black)
                         }
                     }
+                    Spacer()
+                    Button {
+                        todoLists.remove(at: index)
+                    } label: {
+                        Image(systemName: "trash.fill")
+                            .padding(.trailing, 20)
+                    }
                 }
                 .padding(.top, 1)
                 .padding(.leading, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
+            Spacer()
+            Button {
+                todoLists.removeAll()
+            } label: {
+                Text("リセット")
+                    .font(.system(size: 20, weight: .bold, design: .default))
+                    .foregroundStyle(.red)
+            }
         }
-        Spacer()
     }
 }
 
