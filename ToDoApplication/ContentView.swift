@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct ToDoItem {
+struct ToDoItem: Identifiable, Codable {
+    var id = UUID()
     var isChecked: Bool
     var task: String
 }
@@ -15,6 +16,8 @@ struct ToDoItem {
 struct ContentView: View {
     @State var newTask: String = ""
     @State var todoLists: [ToDoItem] = []
+
+    private let todoListKey = "todoListKey"
 
     var body: some View {
         VStack {
@@ -26,11 +29,10 @@ struct ContentView: View {
                     .frame(width: 300)
                 Button {
                     if !newTask.isEmpty {
-                        todoLists.append(
-                            ToDoItem(isChecked: false, task: newTask)
-                        )
+                        let newItem = ToDoItem(isChecked: false, task: newTask)
+                        todoLists.append(newItem)
+                        newTask = ""
                     }
-                    newTask = ""
                 } label: {
                     Image(systemName: "plus.square.fill")
                         .resizable()
@@ -72,6 +74,25 @@ struct ContentView: View {
                 Text("リセット")
                     .font(.system(size: 20, weight: .bold, design: .default))
                     .foregroundStyle(.red)
+            }
+        }
+        .onAppear {
+            if let savedToDoLists = UserDefaults.standard.data(forKey: todoListKey) {
+                do {
+                    let decoder = JSONDecoder()
+                    todoLists = try decoder.decode([ToDoItem].self, from: savedToDoLists)
+                } catch {
+                    print("Failed to decode TodoItems: \(error)")
+                }
+            }
+        }
+        .onDisappear {
+            do {
+                let encoder = JSONEncoder()
+                let encodedToDoLists = try encoder.encode(todoLists)
+                UserDefaults.standard.set(encodedToDoLists, forKey: todoListKey)
+            } catch {
+                print("Failed to encode ToDoItems: \(error)")
             }
         }
     }
