@@ -29,8 +29,8 @@ struct ContentView: View {
                         todoLists.append(
                             ToDoItem(isChecked: false, task: newTask)
                         )
-                        newTask = ""
                     }
+                    newTask = ""
                 } label: {
                     Image(systemName: "plus.square.fill")
                         .resizable()
@@ -47,10 +47,10 @@ struct ContentView: View {
                         if todoLists[index].isChecked {
                             Text(todoLists[index].task)
                                 .strikethrough()
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color("TextColor"))
                         } else {
                             Text(todoLists[index].task)
-                                .foregroundStyle(.black)
+                                .foregroundStyle(Color("TextColor"))
                         }
                     }
                     Spacer()
