@@ -8,15 +8,15 @@
 import SwiftUI
 
 enum Tab: String {
-    case ToDo = "ToDo"
-    case News = "News"
+    case todo = "ToDo"
+    case news = "News"
 
     @ViewBuilder var tabContent: some View {
         switch self {
-        case .ToDo:
+        case .todo:
             Image(systemName: "checkmark.circle.fill")
             Text(self.rawValue)
-        case .News:
+        case .news:
             Image(systemName: "newspaper.fill")
             Text(self.rawValue)
         }
@@ -24,16 +24,16 @@ enum Tab: String {
 }
 
 struct ContentView: View {
-    @State private var selectedTab: Tab = .ToDo
+    @State private var selectedTab: Tab = .todo
 
     var body: some View {
         TabView(selection: $selectedTab) {
             ToDoView()
-                .tabItem { Tab.ToDo.tabContent }
-                .tag(Tab.ToDo)
+                .tabItem { Tab.todo.tabContent }
+                .tag(Tab.todo)
             NewsView()
-                .tabItem { Tab.News.tabContent}
-                .tag(Tab.News)
+                .tabItem { Tab.news.tabContent}
+                .tag(Tab.news)
         }
     }
 }
