@@ -7,22 +7,33 @@
 
 import SwiftUI
 
+enum Tab: String {
+    case ToDo = "ToDo"
+    case News = "News"
+
+    @ViewBuilder var tabContent: some View {
+        switch self {
+        case .ToDo:
+            Image(systemName: "checkmark.circle.fill")
+            Text(self.rawValue)
+        case .News:
+            Image(systemName: "newspaper.fill")
+            Text(self.rawValue)
+        }
+    }
+}
 
 struct ContentView: View {
-    @State private var selection = 1
+    @State private var selectedTab: Tab = .ToDo
 
     var body: some View {
-        TabView(selection: $selection) {
+        TabView(selection: $selectedTab) {
             ToDoView()
-                .tabItem {
-                    Label("ToDo", systemImage: "checkmark.circle.fill")
-                }
-                .tag(1)
+                .tabItem { Tab.ToDo.tabContent }
+                .tag(Tab.ToDo)
             NewsView()
-                .tabItem {
-                    Label("News", systemImage: "newspaper.fill")
-                }
-                .tag(2)
+                .tabItem { Tab.News.tabContent}
+                .tag(Tab.News)
         }
     }
 }
