@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct NewsSource: Codable {
-    let status: String
-    let totalResults: Int
+    let status: String!
+    let totalResults: Int!
     var articles: [Article]
 }
 
 struct Article: Codable {
     var id: Int?
-    var author: String
-    var title: String
-    var description: String
-    var publishedAt: String
+    var author: String!
+    var title: String!
+    var description: String!
+    var publishedAt: String!
 }
 
 class GetNewsEventFetcher: ObservableObject {
@@ -54,6 +54,11 @@ struct NewsView: View {
                 Text(res.publishedAt)
             }
             .padding()
+        }
+        .onAppear {
+            Task {
+                await store.getNews()
+            }
         }
     }
 }
