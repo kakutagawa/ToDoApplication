@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct NewsSource: Codable {
-    let status: String!
-    let totalResults: Int!
+    let status: String
+    let totalResults: Int
     var articles: [Article]
 }
 
 struct Article: Codable {
     var id: Int?
     var author: String!
-    var title: String!
+    var title: String
     var description: String!
     var publishedAt: String!
 }
@@ -25,7 +25,7 @@ class GetNewsEventFetcher: ObservableObject {
     @Published var articles: [Article] = []
 
     func getNews() async {
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=jp&apiKey=35dcdc32b4964d8ba8f209bb76addc6c") else {
+        guard let url = URL(string: "https://newsapi.org/v2/everything?q=keyword&apiKey=35dcdc32b4964d8ba8f209bb76addc6c") else {
             return
         }
 
@@ -46,14 +46,16 @@ struct NewsView: View {
     @ObservedObject var store = GetNewsEventFetcher()
 
     var body: some View {
-        List(self.store.articles, id: \.id) { res in
-            VStack(alignment: .leading) {
-                Text(res.author)
-                Text(res.title)
-                Text(res.description)
-                Text(res.publishedAt)
+        List {
+            ForEach(store.articles, id: \.id) { res in
+                VStack(alignment: .leading) {
+                    Text(res.author)
+                    Text(res.title)
+                    Text(res.description)
+                    Text(res.publishedAt)
+                }
+                .padding()
             }
-            .padding()
         }
         .onAppear {
             Task {
