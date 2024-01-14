@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct NewsSource: Codable {
+struct News: Codable {
     let status: String
     let totalResults: Int
-    var articles: [Article]
+    let articles: [Article]
 }
 
-struct Article: Codable {
-    var id: Int?
+struct Article: Codable, Identifiable {
+    var id: UUID
     var author: String!
-    var title: String
+    var title: String!
     var description: String!
     var publishedAt: String!
 }
@@ -32,7 +32,9 @@ class GetNewsEventFetcher: ObservableObject {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
-            let searchedResult = try decoder.decode(NewsSource.self, from: data)
+            let searchedResult = try decoder.decode(News.self, from: data)
+//            let text = String(data: data, encoding: .utf8)
+//            print(text)
             Task { @MainActor in
                 self.articles = searchedResult.articles
             }
@@ -43,28 +45,44 @@ class GetNewsEventFetcher: ObservableObject {
 }
 
 struct NewsView: View {
-    @ObservedObject var store = GetNewsEventFetcher()
+    @StateObject var store = GetNewsEventFetcher()
+    @State var errorMsg = ""
+    @State var newsList:[(id: Int, author: String, title: String, description: String, publishedAt: String )] = []
+
+    func getData(data: News) {
+        newsList = []
+        if(data.articles.count != 0){
+            newsList = []
+
+            for i in (0 ... (data.articles.count - 1)){
+                self.newsList.append((i,data.articles[i].author,data.articles[i].title, data.articles[i].description, data.articles[i].publishedAt))
+            }
+        } else {
+            errorMsg = "ニュースがありませんでした"
+        }
+    }
 
     var body: some View {
-        List {
-            ForEach(store.articles, id: \.id) { res in
+        if !errorMsg.isEmpty {
+            Text(errorMsg)
+        } else {
+            List (newsList.indices, id: \.description) { index in
                 VStack(alignment: .leading) {
-                    Text(res.author)
-                    Text(res.title)
-                    Text(res.description)
-                    Text(res.publishedAt)
+                    Text(newsList[index].author)
+                    Text(newsList[index].title)
+                    Text(newsList[index].description)
+                    Text(newsList[index].publishedAt)
                 }
                 .padding()
             }
-        }
-        .onAppear {
-            Task {
-                await store.getNews()
+            .onAppear {
+                Task {
+                    await store.getNews()
+                }
             }
         }
     }
 }
-
 #Preview {
     NewsView()
 }
