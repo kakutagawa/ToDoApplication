@@ -13,12 +13,16 @@ struct News: Codable {
     let articles: [Article]
 }
 
-struct Article: Codable, Identifiable {
-    var id: UUID
+struct Article: Codable {
+    var source: Source
     var author: String!
     var title: String!
     var description: String!
     var publishedAt: String!
+
+    struct Source: Codable, Identifiable {
+        var id: Int?
+    }
 }
 
 class GetNewsEventFetcher: ObservableObject {
