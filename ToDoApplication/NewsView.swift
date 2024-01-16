@@ -15,21 +15,24 @@ struct News: Codable {
 
 struct Article: Codable {
     var source: Source
-    var author: String!
-    var title: String!
-    var description: String!
-    var publishedAt: String!
+    var author: String?
+    var title: String
+    var description: String?
+    var publishedAt: String
+    var urlToImage: String?
 
     struct Source: Codable, Identifiable {
-        var id: Int?
+        var id: String?
     }
 }
+
+
 
 class GetNewsEventFetcher: ObservableObject {
     @Published var articles: [Article] = []
 
     func getNews() async {
-        guard let url = URL(string: "https://newsapi.org/v2/everything?q=keyword&apiKey=35dcdc32b4964d8ba8f209bb76addc6c") else {
+        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=jp&apiKey=35dcdc32b4964d8ba8f209bb76addc6c") else {
             return
         }
 
@@ -50,39 +53,23 @@ class GetNewsEventFetcher: ObservableObject {
 
 struct NewsView: View {
     @StateObject var store = GetNewsEventFetcher()
-    @State var errorMsg = ""
-    @State var newsList:[(id: Int, author: String, title: String, description: String, publishedAt: String )] = []
-
-    func getData(data: News) {
-        newsList = []
-        if(data.articles.count != 0){
-            newsList = []
-
-            for i in (0 ... (data.articles.count - 1)){
-                self.newsList.append((i,data.articles[i].author,data.articles[i].title, data.articles[i].description, data.articles[i].publishedAt))
-            }
-        } else {
-            errorMsg = "ニュースがありませんでした"
-        }
-    }
 
     var body: some View {
-        if !errorMsg.isEmpty {
-            Text(errorMsg)
-        } else {
-            List (newsList.indices, id: \.description) { index in
-                VStack(alignment: .leading) {
-                    Text(newsList[index].author)
-                    Text(newsList[index].title)
-                    Text(newsList[index].description)
-                    Text(newsList[index].publishedAt)
-                }
-                .padding()
+        List(store.articles, id: \.title) { article in
+            VStack(alignment: .leading) {
+                Image(article.urlToImage ?? "画像なし")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                Text(article.author ?? "なし")
+                Text(article.title)
+                Text(article.description ?? "なし")
+                Text(article.publishedAt)
             }
-            .onAppear {
-                Task {
-                    await store.getNews()
-                }
+            .padding()
+        }
+        .onAppear {
+            Task {
+                await store.getNews()
             }
         }
     }
