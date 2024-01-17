@@ -57,9 +57,13 @@ struct NewsView: View {
     var body: some View {
         List(store.articles, id: \.title) { article in
             VStack(alignment: .leading) {
-                Image(article.urlToImage ?? "画像なし")
-                    .resizable()
-                    .frame(width: 50, height: 50)
+                AsyncImage(url: URL(string: article.urlToImage ?? "")) { image in
+                    image
+                        .resizable()
+                        .frame(width:50, height: 50)
+                } placeholder: {
+                    ProgressView()
+                }
                 Text(article.author ?? "なし")
                 Text(article.title)
                 Text(article.description ?? "なし")
