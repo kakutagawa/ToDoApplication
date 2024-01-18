@@ -57,19 +57,28 @@ struct NewsView: View {
     var body: some View {
         List(store.articles, id: \.title) { article in
             VStack(alignment: .leading) {
+                Text(article.title)
+                    .font(.headline)
+                    .foregroundStyle(Color("TextColor"))
+                Spacer()
+                Text(article.description ?? "なし")
+                    .font(.subheadline)
+                    .foregroundStyle(Color("TextColor"))
+                Spacer()
+                Text(article.publishedAt)
+                    .font(.caption)
+                    .foregroundStyle(Color.gray)
+                Text(article.author ?? "なし")
+                    .font(.caption)
+                    .foregroundStyle(Color.gray)
                 AsyncImage(url: URL(string: article.urlToImage ?? "")) { image in
                     image
                         .resizable()
-                        .frame(width:50, height: 50)
+                        .frame(width:120, height: 70)
                 } placeholder: {
                     ProgressView()
                 }
-                Text(article.author ?? "なし")
-                Text(article.title)
-                Text(article.description ?? "なし")
-                Text(article.publishedAt)
             }
-            .padding()
         }
         .onAppear {
             Task {
