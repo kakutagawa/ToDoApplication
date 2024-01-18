@@ -13,7 +13,7 @@ struct News: Codable {
     let articles: [Article]
 }
 
-struct Article: Codable {
+struct Article: Codable, Hashable {
     var source: Source
     var author: String?
     var title: String
@@ -21,7 +21,7 @@ struct Article: Codable {
     var publishedAt: String
     var urlToImage: String?
 
-    struct Source: Codable, Identifiable {
+    struct Source: Codable, Identifiable, Hashable {
         var id: String?
     }
 }
@@ -40,8 +40,8 @@ class GetNewsEventFetcher: ObservableObject {
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
             let searchedResult = try decoder.decode(News.self, from: data)
-//            let text = String(data: data, encoding: .utf8)
-//            print(text)
+            //            let text = String(data: data, encoding: .utf8)
+            //            print(text)
             Task { @MainActor in
                 self.articles = searchedResult.articles
             }
@@ -55,34 +55,45 @@ struct NewsView: View {
     @StateObject var store = GetNewsEventFetcher()
 
     var body: some View {
-        List(store.articles, id: \.title) { article in
-            VStack(alignment: .leading) {
-                Text(article.title)
-                    .font(.headline)
-                    .foregroundStyle(Color("TextColor"))
-                Spacer()
-                Text(article.description ?? "なし")
-                    .font(.subheadline)
-                    .foregroundStyle(Color("TextColor"))
-                Spacer()
-                Text(article.publishedAt)
-                    .font(.caption)
-                    .foregroundStyle(Color.gray)
-                Text(article.author ?? "なし")
-                    .font(.caption)
-                    .foregroundStyle(Color.gray)
-                AsyncImage(url: URL(string: article.urlToImage ?? "")) { image in
-                    image
-                        .resizable()
-                        .frame(width:120, height: 70)
-                } placeholder: {
-                    ProgressView()
+        VStack {
+            Text("News")
+                .font(.system(size: 30, weight: .bold, design: .default))
+            NavigationStack {
+                List(store.articles, id: \.title) { article in
+                    NavigationLink(value: article) {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(article.title)
+                                        .font(.headline)
+                                        .foregroundStyle(Color("TextColor"))
+                                    Spacer()
+                                    Text(article.publishedAt)
+                                        .font(.caption)
+                                        .foregroundStyle(Color.gray)
+                                    Text(article.author ?? "")
+                                        .font(.caption)
+                                        .foregroundStyle(Color.gray)
+                                }
+                                AsyncImage(url: URL(string: article.urlToImage ?? "")) { image in
+                                    image
+                                        .resizable()
+                                        .frame(width:100, height: 70)
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                            }
+                        }
+                    }
+                }
+                .navigationDestination(for: Article.self) { article in
+                    NewsDetailView(newsDetail: article)
                 }
             }
-        }
-        .onAppear {
-            Task {
-                await store.getNews()
+            .onAppear {
+                Task {
+                    await store.getNews()
+                }
             }
         }
     }
