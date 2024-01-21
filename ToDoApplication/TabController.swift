@@ -7,23 +7,30 @@
 
 import SwiftUI
 
-struct UIKitTabBarController: UIViewControllerRepresentable {
-    @Binding var selectedTab: Tab
+final class TabBarController: UITabBarController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-    func makeUIViewController(context: Context) -> UITabBarController {
-        let tabBarController = UITabBarController()
         let todoVC = UIHostingController(rootView: ToDoView())
         let newsVC = UIHostingController(rootView: NewsView())
 
         todoVC.tabBarItem = UITabBarItem(title: Tab.todo.rawValue, image: UIImage(systemName: "checkmark.circle.fill"), tag: 0)
         newsVC.tabBarItem = UITabBarItem(title: Tab.news.rawValue, image: UIImage(systemName: "newspaper.fill"), tag: 1)
 
-        tabBarController.viewControllers = [todoVC, newsVC]
-        return tabBarController
+        self.viewControllers = [todoVC, newsVC]
+    }
+}
+
+struct UIKitTabBarController: UIViewControllerRepresentable {
+    @Binding var selectedTab: Tab
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        TabBarController()
     }
 
-    func updateUIViewController(_ uiViewController: UITabBarController, context: Context) {
-        uiViewController.selectedViewController = uiViewController.viewControllers?.first
-        uiViewController.selectedIndex = Tab.allCases.firstIndex(of: selectedTab) ?? 0
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        if let tabBarController = uiViewController as? TabBarController {
+            tabBarController.selectedIndex = Tab.allCases.firstIndex(of: selectedTab) ?? 0
+        }
     }
 }
