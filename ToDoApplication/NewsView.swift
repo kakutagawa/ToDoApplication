@@ -53,47 +53,47 @@ class GetNewsEventFetcher: ObservableObject {
 
 struct NewsView: View {
     @StateObject var store = GetNewsEventFetcher()
+    @State private var selectedArticle: Article?
 
     var body: some View {
         VStack {
             Text("News")
                 .font(.system(size: 30, weight: .bold, design: .default))
-            NavigationStack {
-                List(store.articles, id: \.title) { article in
-                    NavigationLink(value: article) {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(article.title)
-                                        .font(.headline)
-                                        .foregroundStyle(Color("TextColor"))
-                                    Spacer()
-                                    Text(article.publishedAt)
-                                        .font(.caption)
-                                        .foregroundStyle(Color.gray)
-                                    Text(article.author ?? "")
-                                        .font(.caption)
-                                        .foregroundStyle(Color.gray)
-                                }
-                                AsyncImage(url: URL(string: article.urlToImage ?? "")) { image in
-                                    image
-                                        .resizable()
-                                        .frame(width:100, height: 70)
-                                } placeholder: {
-                                    ProgressView()
-                                }
+            List(store.articles, id: \.title) { article in
+                Button {
+                    selectedArticle = article
+                //わからんこと：ここに何を入れるか？（ViewControllerを呼び出したい）
+
+                } label: {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(article.title)
+                                    .font(.headline)
+                                    .foregroundStyle(Color("TextColor"))
+                                Spacer()
+                                Text(article.publishedAt)
+                                    .font(.caption)
+                                    .foregroundStyle(Color.gray)
+                                Text(article.author ?? "")
+                                    .font(.caption)
+                                    .foregroundStyle(Color.gray)
+                            }
+                            AsyncImage(url: URL(string: article.urlToImage ?? "")) { image in
+                                image
+                                    .resizable()
+                                    .frame(width:100, height: 70)
+                            } placeholder: {
+                                ProgressView()
                             }
                         }
                     }
                 }
-                .navigationDestination(for: Article.self) { article in
-                    NewsDetailView(newsDetail: article)
-                }
             }
-            .onAppear {
-                Task {
-                    await store.getNews()
-                }
+        }
+        .onAppear {
+            Task {
+                await store.getNews()
             }
         }
     }

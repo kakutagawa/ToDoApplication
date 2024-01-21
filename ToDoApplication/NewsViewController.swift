@@ -8,14 +8,17 @@
 import UIKit
 import SwiftUI
 
+//わからんこと：ここで NewsDetailViewを呼び出す方法
+
 class NewsViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
-    @IBAction func presentNewsView() {
-        let controller = UIHostingController(rootView: NewsView())
-        controller.modalPresentationStyle = .overFullScreen
-        present(controller, animated: true)
-    }
+//    @IBAction func presentNewsView() {
+//        let controller = UIHostingController(rootView: NewsView())
+//        controller.modalPresentationStyle = .overFullScreen
+//        present(controller, animated: true)
+//    }
 }
+
