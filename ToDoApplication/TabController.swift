@@ -11,8 +11,8 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let todoVC = UIHostingController(rootView: ToDoView())
-        let newsVC = UIHostingController(rootView: NewsView())
+        let todoVC = UIHostingController(rootView: ToDoViewController())
+        let newsVC = UIHostingController(rootView: NewsViewController())
 
         todoVC.tabBarItem = UITabBarItem(title: Tab.todo.rawValue, image: UIImage(systemName: "checkmark.circle.fill"), tag: 0)
         newsVC.tabBarItem = UITabBarItem(title: Tab.news.rawValue, image: UIImage(systemName: "newspaper.fill"), tag: 1)
