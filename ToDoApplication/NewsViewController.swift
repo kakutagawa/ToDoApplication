@@ -13,11 +13,25 @@ final class NewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let todoViewController = UIHostingController(rootView: NewsView())
-        addChild(todoViewController)
-        todoViewController.view.frame = view.bounds
-        view.addSubview(todoViewController.view)
-        todoViewController.didMove(toParent: self)
+        let newsViewController = UIHostingController(rootView: NewsView())
+        addChild(newsViewController)
+        newsViewController.view.frame = view.bounds
+        view.addSubview(newsViewController.view)
+        newsViewController.didMove(toParent: self)
+    }
+}
+
+final class NewsDetailViewController: UIViewController {
+    @Binding var selectedArticle: Article
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let newsDetailViewController = UIHostingController(rootView: NewsDetailView(newsDetail: selectedArticle))
+        addChild(newsDetailViewController)
+        newsDetailViewController.view.frame = view.bounds
+        view.addSubview(newsDetailViewController.view)
+        newsDetailViewController.didMove(toParent: self)
     }
 }
 

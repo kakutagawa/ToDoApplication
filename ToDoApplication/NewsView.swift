@@ -62,7 +62,7 @@ struct NewsView: View {
             List(store.articles, id: \.title) { article in
                 Button {
                     selectedArticle = article
-                //わからんこと：ここに何を入れるか？（ViewControllerを呼び出したい）
+                    NewsDetailViewController(selectedArticle: $selectedArticle)
 
                 } label: {
                     VStack(alignment: .leading) {
