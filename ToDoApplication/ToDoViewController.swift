@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-class ToDoViewController: UIViewController {
+final class ToDoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +18,5 @@ class ToDoViewController: UIViewController {
         todoViewController.view.frame = view.bounds
         view.addSubview(todoViewController.view)
         todoViewController.didMove(toParent: self)
-
- 
     }
-
 }
