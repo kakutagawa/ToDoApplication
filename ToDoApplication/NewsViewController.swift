@@ -18,6 +18,25 @@ final class NewsViewController: UIViewController {
         newsViewController.view.frame = view.bounds
         view.addSubview(newsViewController.view)
         newsViewController.didMove(toParent: self)
+
+        newsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            newsViewController.view.widthAnchor.constraint(
+                equalTo: view.widthAnchor,
+                multiplier: 1
+            ),
+            newsViewController.view.heightAnchor.constraint(
+                equalTo: view.heightAnchor,
+                multiplier: 1
+            ),
+            newsViewController.view.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            newsViewController.view.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor
+            )
+        ])
     }
 }
 
