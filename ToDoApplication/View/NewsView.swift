@@ -7,53 +7,23 @@
 
 import SwiftUI
 
-struct News: Codable {
-    let status: String
-    let totalResults: Int
-    let articles: [Article]
+protocol NewsDelegate {
+    func transition(article: Article)
 }
 
-struct Article: Codable, Hashable {
-    var source: Source
-    var author: String?
-    var title: String
-    var description: String?
-    var publishedAt: String
-    var urlToImage: String?
-
-    struct Source: Codable, Identifiable, Hashable {
-        var id: String?
-    }
-}
-
-
-
-class GetNewsEventFetcher: ObservableObject {
-    @Published var articles: [Article] = []
-
-    func getNews() async {
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=jp&apiKey=35dcdc32b4964d8ba8f209bb76addc6c") else {
+final class NewsArticleDidTap {
+    var delegate: NewsDelegate?
+    func didTapArticle(article: Article) {
+        guard let delegate = delegate else {
             return
         }
-
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let decoder = JSONDecoder()
-            let searchedResult = try decoder.decode(News.self, from: data)
-            //            let text = String(data: data, encoding: .utf8)
-            //            print(text)
-            Task { @MainActor in
-                self.articles = searchedResult.articles
-            }
-        } catch {
-            print("エラー: \(error)")
-        }
+        delegate.transition(article: article)
     }
 }
 
 struct NewsView: View {
     @StateObject var store = GetNewsEventFetcher()
-    @State private var selectedArticle: Article?
+    var newsArticleDidTap = NewsArticleDidTap()
 
     var body: some View {
         VStack {
@@ -61,9 +31,7 @@ struct NewsView: View {
                 .font(.system(size: 30, weight: .bold, design: .default))
             List(store.articles, id: \.title) { article in
                 Button {
-                    selectedArticle = article
-                    NewsDetailViewController(selectedArticle: $selectedArticle)
-
+                    newsArticleDidTap.didTapArticle(article: article)
                 } label: {
                     VStack(alignment: .leading) {
                         HStack {

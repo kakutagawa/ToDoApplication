@@ -12,7 +12,7 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         let todoVC = ToDoViewController()
-        let newsVC = NewsViewController()
+        let newsVC = UINavigationController(rootViewController: NewsViewController()) 
 
         todoVC.tabBarItem = UITabBarItem(title: Tab.todo.rawValue, image: UIImage(systemName: "checkmark.circle.fill"), tag: 0)
         newsVC.tabBarItem = UITabBarItem(title: Tab.news.rawValue, image: UIImage(systemName: "newspaper.fill"), tag: 1)
