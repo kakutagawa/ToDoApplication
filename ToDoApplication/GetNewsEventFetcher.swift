@@ -7,7 +7,7 @@
 
 import Foundation
 
-class GetNewsEventFetcher: ObservableObject {
+final class GetNewsEventFetcher: ObservableObject {
     @Published var articles: [Article] = []
 
     func getNews() async {
@@ -19,8 +19,6 @@ class GetNewsEventFetcher: ObservableObject {
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
             let searchedResult = try decoder.decode(News.self, from: data)
-            //            let text = String(data: data, encoding: .utf8)
-            //            print(text)
             Task { @MainActor in
                 self.articles = searchedResult.articles
             }

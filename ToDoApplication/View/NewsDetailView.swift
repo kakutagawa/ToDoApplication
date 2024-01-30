@@ -41,5 +41,13 @@ struct NewsDetailView: View {
 }
 
 #Preview {
-    NewsDetailView(newsDetail: Article(source: Article.Source(),author: "Kohei AKutagawa" ,title: "ニュースタイトル",description: "本文本文本文本文本文" ,publishedAt: "2024-01-01"))
+    NewsDetailView(
+        newsDetail: Article(
+            source: Article.Source(),
+            author: "Kohei AKutagawa",
+            title: "ニュースタイトル",
+            description: "本文本文本文本文本文",
+            publishedAt: "2024-01-01"
+        )
+    )
 }
