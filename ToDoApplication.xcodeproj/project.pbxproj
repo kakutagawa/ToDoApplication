@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		1D48A86E2B4ED9BC007FE6A7 /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D48A86D2B4ED9BC007FE6A7 /* ToDoView.swift */; };
 		1D48A8702B4ED9D6007FE6A7 /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D48A86F2B4ED9D6007FE6A7 /* NewsView.swift */; };
+		1DB4BDCB2B592DEE004C6011 /* NewsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB4BDCA2B592DEE004C6011 /* NewsDetailView.swift */; };
+		1DD0D27C2B5ABC530008DE7F /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD0D27B2B5ABC530008DE7F /* TabController.swift */; };
+		1DD0D2822B5CEC820008DE7F /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD0D2812B5CEC820008DE7F /* NewsViewController.swift */; };
+		1DD0D2842B5EA3330008DE7F /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD0D2832B5EA3330008DE7F /* ToDoViewController.swift */; };
+		1DD0D2862B6319D60008DE7F /* NewsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD0D2852B6319D60008DE7F /* NewsDetailViewController.swift */; };
+		1DD0D2882B631A660008DE7F /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD0D2872B631A660008DE7F /* ToDoItem.swift */; };
+		1DD0D28A2B631AD30008DE7F /* NewsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD0D2892B631AD30008DE7F /* NewsItem.swift */; };
+		1DD0D28C2B631B010008DE7F /* GetNewsEventFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD0D28B2B631B010008DE7F /* GetNewsEventFetcher.swift */; };
 		1DE1C3652B2755090081D07C /* ToDoApplicationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1C3642B2755090081D07C /* ToDoApplicationApp.swift */; };
 		1DE1C3672B2755090081D07C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE1C3662B2755090081D07C /* ContentView.swift */; };
 		1DE1C3692B27550B0081D07C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DE1C3682B27550B0081D07C /* Assets.xcassets */; };
@@ -38,6 +46,14 @@
 /* Begin PBXFileReference section */
 		1D48A86D2B4ED9BC007FE6A7 /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
 		1D48A86F2B4ED9D6007FE6A7 /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
+		1DB4BDCA2B592DEE004C6011 /* NewsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailView.swift; sourceTree = "<group>"; };
+		1DD0D27B2B5ABC530008DE7F /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		1DD0D2812B5CEC820008DE7F /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		1DD0D2832B5EA3330008DE7F /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
+		1DD0D2852B6319D60008DE7F /* NewsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailViewController.swift; sourceTree = "<group>"; };
+		1DD0D2872B631A660008DE7F /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
+		1DD0D2892B631AD30008DE7F /* NewsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItem.swift; sourceTree = "<group>"; };
+		1DD0D28B2B631B010008DE7F /* GetNewsEventFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNewsEventFetcher.swift; sourceTree = "<group>"; };
 		1DE1C3612B2755090081D07C /* ToDoApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DE1C3642B2755090081D07C /* ToDoApplicationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoApplicationApp.swift; sourceTree = "<group>"; };
 		1DE1C3662B2755090081D07C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +91,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1DD0D28D2B631B180008DE7F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1D48A86F2B4ED9D6007FE6A7 /* NewsView.swift */,
+				1D48A86D2B4ED9BC007FE6A7 /* ToDoView.swift */,
+				1DB4BDCA2B592DEE004C6011 /* NewsDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1DD0D28E2B631B820008DE7F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1DD0D27B2B5ABC530008DE7F /* TabController.swift */,
+				1DD0D2832B5EA3330008DE7F /* ToDoViewController.swift */,
+				1DD0D2812B5CEC820008DE7F /* NewsViewController.swift */,
+				1DD0D2852B6319D60008DE7F /* NewsDetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		1DE1C3582B2755090081D07C = {
 			isa = PBXGroup;
 			children = (
@@ -98,10 +135,13 @@
 		1DE1C3632B2755090081D07C /* ToDoApplication */ = {
 			isa = PBXGroup;
 			children = (
+				1DD0D28D2B631B180008DE7F /* View */,
+				1DD0D28E2B631B820008DE7F /* ViewController */,
 				1DE1C3642B2755090081D07C /* ToDoApplicationApp.swift */,
 				1DE1C3662B2755090081D07C /* ContentView.swift */,
-				1D48A86D2B4ED9BC007FE6A7 /* ToDoView.swift */,
-				1D48A86F2B4ED9D6007FE6A7 /* NewsView.swift */,
+				1DD0D2872B631A660008DE7F /* ToDoItem.swift */,
+				1DD0D2892B631AD30008DE7F /* NewsItem.swift */,
+				1DD0D28B2B631B010008DE7F /* GetNewsEventFetcher.swift */,
 				1DE1C3682B27550B0081D07C /* Assets.xcassets */,
 				1DE1C36A2B27550B0081D07C /* Preview Content */,
 			);
@@ -263,10 +303,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DD0D28C2B631B010008DE7F /* GetNewsEventFetcher.swift in Sources */,
+				1DD0D2842B5EA3330008DE7F /* ToDoViewController.swift in Sources */,
 				1DE1C3672B2755090081D07C /* ContentView.swift in Sources */,
+				1DD0D2882B631A660008DE7F /* ToDoItem.swift in Sources */,
+				1DD0D2862B6319D60008DE7F /* NewsDetailViewController.swift in Sources */,
 				1D48A8702B4ED9D6007FE6A7 /* NewsView.swift in Sources */,
+				1DD0D27C2B5ABC530008DE7F /* TabController.swift in Sources */,
 				1D48A86E2B4ED9BC007FE6A7 /* ToDoView.swift in Sources */,
 				1DE1C3652B2755090081D07C /* ToDoApplicationApp.swift in Sources */,
+				1DD0D28A2B631AD30008DE7F /* NewsItem.swift in Sources */,
+				1DB4BDCB2B592DEE004C6011 /* NewsDetailView.swift in Sources */,
+				1DD0D2822B5CEC820008DE7F /* NewsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

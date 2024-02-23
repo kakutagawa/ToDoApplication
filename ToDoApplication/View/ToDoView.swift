@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-struct ToDoItem: Identifiable, Codable {
-    var id = UUID()
-    var isChecked: Bool
-    var task: String
-}
-
 struct ToDoView: View {
     @State var newTask: String = ""
     @State var todoLists: [ToDoItem] = []
